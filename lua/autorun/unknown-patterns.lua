@@ -58,7 +58,7 @@ hook.Add( "EntityFireBullets", addon_name, function( _, entity, bullet )
             ENTITY_FireBullets( entity, bullet, true )
         end
 
-        return
+        return false
     end
 
     local time_value = time
