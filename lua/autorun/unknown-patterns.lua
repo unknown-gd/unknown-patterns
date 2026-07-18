@@ -30,15 +30,15 @@ local math_sin, math_cos = math.sin, math.cos
 
 local isfunction = isfunction
 local isnumber = isnumber
-local os_clock = os.clock
+local CurTime = CurTime
 
 local temp_vector = Vector( 0, 0, 0 )
 local vector_origin = vector_origin
 
-local time = os_clock()
+local time = CurTime()
 
 hook.Add( "Think", addon_name, function()
-    time = os_clock()
+    time = CurTime()
 end, PRE_HOOK )
 
 ---@param entity Entity
@@ -67,7 +67,7 @@ hook.Add( "EntityFireBullets", addon_name, function( _, entity, bullet )
     if time_offset ~= nil then
         if isfunction( time_offset ) then
             ---@cast time_offset fun( t: number ): number
-            time = time + ( time_offset( time_value ) or 0 )
+            time = time + (time_offset( time_value ) or 0)
         elseif isnumber( time_offset ) then
             ---@type number
             time = time + time_offset
@@ -78,7 +78,7 @@ hook.Add( "EntityFireBullets", addon_name, function( _, entity, bullet )
     if time_multiplier ~= nil then
         if isfunction( time_multiplier ) then
             ---@cast time_multiplier fun( t: number ): number
-            time_value = time_value * ( time_multiplier( time_value ) or 1 )
+            time_value = time_value * (time_multiplier( time_value ) or 1)
         elseif isnumber( time_multiplier ) then
             ---@type number
             time_value = time_value * time_multiplier
@@ -92,7 +92,7 @@ hook.Add( "EntityFireBullets", addon_name, function( _, entity, bullet )
     if pattern == nil then return end
 
     ---@type fun( f: number, t: number ): number
-    local fn = pattern[ ( math_floor( time_value ) % #pattern ) + 1 ]
+    local fn = pattern[ (math_floor( time_value ) % #pattern) + 1 ]
     if fn == nil then return end
 
     local x, y = fn( fraction, time_value )
